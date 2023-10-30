@@ -8,11 +8,12 @@ export default function Answers({
   //Ref - manage data independently
 
   const shuffledAnswers = useRef();
-
   if (!shuffledAnswers.current) {
     shuffledAnswers.current = [...answers];
     shuffledAnswers.current.sort(() => Math.random() - 0.5);
   }
+
+  console.log("ANSWER RENDER!");
   return (
     <ul id="answers">
       {shuffledAnswers.current.map((answer) => {
