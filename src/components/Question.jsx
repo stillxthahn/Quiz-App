@@ -8,6 +8,17 @@ export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
     isCorrect: null,
   });
 
+  let timer = 10000;
+
+  if (answer.selectedAnswer) {
+    timer = 1000;
+  }
+
+  if (answer.isCorrect !== null) {
+    timer = 2000;
+  }
+
+
   function handleSelectAnswer(answer) {
     setAnswer({
       selectedAnswer: answer,
@@ -35,10 +46,12 @@ export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
   return (
     <div id="question">
       <QuestionTimer
+        key={timer}
         //QuestionTimer khong recreated moi khi Quiz render --> tricky: them key
-        timeout={10000}
+        timeout={timer}
         //handleSelectAnswer luon khoi tao lai memory -> useEffect bi execuate lien tuc --> useCallback
-        onTimeout={onSkipAnswer}
+        onTimeout={answer.selectedAnswer === '' ? onSkipAnswer : null}
+        mode={answerState}
       />
       <h2>{QUESTIONS[index].text}</h2>
       <Answers
